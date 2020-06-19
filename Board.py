@@ -15,7 +15,7 @@ class Board:
                     self.mat[i][j] = Board.B
                 elif(i>4 and i%2!=j%2):
                     self.mat[i][j] = Board.W
-        #print(mat)
+        #print(self.mat)
 
     def getMat(self):
         return self.mat

@@ -2,6 +2,13 @@ import tkinter as tk
 from Board import Board
 from PIL import Image
 from PIL import ImageTk as itk
+import numpy as np
+
+def init():
+    global root
+    global extraref #creates a reference to the pieces images
+                    #so they don't get garbage collected
+    extraref = np.array([tk.Label() for item in range(64)]).reshape(8, 8)
 
 """def on_enter(e):
     e.widget["background"] = "green"
@@ -12,23 +19,31 @@ def on_leave(e):
 
 def switch(board, val):
     switcher = {
-        Board.E: "imgs/E.png",
-        Board.W: "imgs/W.png",
-        Board.B: "imgs/B.png",
-        Board.DW: "imgs/DW.png",
-        Board.DB: "imgs/DB.png",
+        Board.E: "imgs/E.gif",
+        Board.W: "imgs/W.gif",
+        Board.B: "imgs/B.gif",
+        Board.DW: "imgs/DW.gif",
+        Board.DB: "imgs/DB.gif",
     }
     return switcher.get(val)
 
 def refresh(board): #refreshes the board after a turn
     mat = board.getMat()
+    #print(mat)
     for i in range(8):
         for j in range(8):
-            tmp_img = Image.open(switch(board, mat[i][j]))
-            img = itk.PhotoImage(tmp_img)
-            butts[i*8+j].configure(image = img)
-            #butts[i*8+j].pack()
+            path = switch(board, mat[i][j])
+            #path = "imgs/B.gif"
+            tmp_img = Image.open(path)
+            img = itk.PhotoImage(tmp_img, master=root)
+            
+            extraref[i][j] = tk.Label(root)
+            extraref[i][j].img = img
+            extraref[i][j].config(image = extraref[i][j].img)
+            butts[i*8+j].config(image = extraref[i][j].img)
+            extraref[i][j].pack()
 
+init()
 root = tk.Tk()
 frame = tk.Frame(root, width=800, height=800, background="white")
 frame.pack_propagate(0)
