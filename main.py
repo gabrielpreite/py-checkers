@@ -41,13 +41,12 @@ def refresh(board): #refreshes the board after a turn
             extraref[i][j].img = img
             extraref[i][j].config(image = extraref[i][j].img)
             butts[i*8+j].config(image = extraref[i][j].img)
-            extraref[i][j].pack()
 
-init()
 root = tk.Tk()
+init()
 frame = tk.Frame(root, width=800, height=800, background="white")
-frame.pack_propagate(0)
 frame.pack()
+frame.pack_propagate(0)
 
 lab = tk.Label(frame)
 lab.pack()
@@ -56,7 +55,7 @@ butts = list()
 for i in range (8):
     for j in range (8):
         lab.grid(row=i, column=j)
-        butt = tk.Button(lab, bg=("white" if i%2 != j%2 else "black"))
+        butt = tk.Button(lab, bg=("black" if i%2 != j%2 else "white"))
         #butt.config(height=5, width=8)
         #butt.bind("<Enter>", on_enter)
         #butt.bind("<Leave>", on_leave)
